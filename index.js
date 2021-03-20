@@ -2,12 +2,28 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
 
 // middlewarre
 app.use(express.json());
 app.use(cors());
+
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader("Access-Control-Allow-Origin", "https://relysia.art");
+
+  // Request methods you wish to allow
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+
+  // Request headers you wish to allow
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
+  // Pass to next layer of middleware
+  next();
+});
 
 const fs = require("fs").promises;
 app.get("/api/todo", async (req, res) => {
@@ -24,6 +40,8 @@ app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
 
+// const low = require("lowdb");
+// const FileSync = require("lowdb/adapters/FileSync");
 // // lowdb initialization
 // const adapter = new FileSync("db.json");
 // const db = low(adapter);
