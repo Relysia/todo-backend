@@ -5,7 +5,7 @@ const cors = require("cors");
 
 // middlewarre
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+// app.use(cors({ origin: "*" }));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
