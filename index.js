@@ -5,7 +5,15 @@ const cors = require("cors");
 
 // middlewarre
 app.use(express.json());
-app.use(cors({ origin: "https://relysia.art" }));
+app.use(cors({ origin: "*" }));
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 const fs = require("fs").promises;
 app.get("/api/todo", async (req, res) => {
